@@ -4,17 +4,6 @@ import html
 
 URL = "https://boards-api.greenhouse.io/v1/boards/anthropic/jobs?content=true"
 
-response = requests.get(URL, timeout=15)
-print(response.status_code)
-
-data = response.json()
-jobs = data["jobs"]
-print(len(jobs))
-
-# task 4
-# for job in jobs:
-#     print(job["title"])
-
 # task 5
 INCLUDE = ["software engineer", "backend", "back-end", "platform engineer", "infrastructure engineer",
            "developer", "api", "data engineer"]
@@ -28,9 +17,9 @@ WORD_NUMBERS = {
     "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10,
 }
 
-EXPERIENCE_PATTERN = r"(\d+)\s*\+?\s*(?:or more\s+)?years?"
-
 CLEARANCE_TERMS = ["clearance", "secret", "ts/sci"]
+
+EXPERIENCE_PATTERN = r"(\d+)\s*\+?\s*(?:or more\s+)?years?"
 
 def too_much_experience(text):
     text = text.lower()
@@ -90,10 +79,32 @@ def run_tests():
     assert is_clearance("Executive Secretary") == False
     assert is_clearance("Python and AWS") == False
 
-run_tests()
+def main():
+    response = requests.get(URL, timeout=15)
+    response.raise_for_status()
+    jobs = response.json()["jobs"]
 
-firstJobContent = jobs[0].get("content", "")
-cleaned = clean_description(firstJobContent)
-print("\n--- Cleaned Description Preview (First 300 chars) ---")
-print(cleaned[:300])
+    match_count = 0
+    for job in jobs:
+        title = job["title"]
+        location = job["location"]["name"]
+        url = job["absolute_url"]
 
+        if not title_matches(title):
+            continue
+        if not location_matches(location):
+            continue
+
+        description = clean_description(job.get("content", ""))
+        if too_much_experience(description):
+            continue
+
+        tag = "[CLEARANCE]" if is_clearance(description) else ""
+        print(f"{title} | {location} | {tag} | {url}")
+        match_count += 1
+
+    print(f"\n{match_count} matches out of {len(jobs)} jobs")
+
+if __name__ == "__main__":
+    run_tests()
+    main()
