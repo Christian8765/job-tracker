@@ -1,11 +1,22 @@
+import csv
+
 from filters import title_matches, location_matches, too_much_experience, is_clearance
 from sources import fetch_greenhouse
 
+
 def main():
-    jobs = fetch_greenhouse("Anthropic", "anthropic")
+    with open("boards.csv") as f:
+        boards = list(csv.DictReader(f))
+
+    all_jobs = []
+    for row in boards:
+        if row["ats"] != "greenhouse":
+            continue
+        jobs = fetch_greenhouse(row["company"], row["slug"])
+        all_jobs.extend(jobs)
 
     match_count = 0
-    for job in jobs:
+    for job in all_jobs:
         company = job["company"]
         title = job["title"]
         location = job["location"]
@@ -23,7 +34,7 @@ def main():
         print(f"{company} | {title} | {location} | {tag} | {url}")
         match_count += 1
 
-    print(f"\n{match_count} matches out of {len(jobs)} jobs")
+    print(f"\n{match_count} matches out of {len(all_jobs)} jobs")
 
 
 if __name__ == "__main__":
