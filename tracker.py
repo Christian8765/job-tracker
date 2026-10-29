@@ -1,7 +1,10 @@
 import csv
+import time
+
+import requests
 
 from filters import title_matches, location_matches, too_much_experience, is_clearance
-from sources import fetch_greenhouse
+from sources import fetch_greenhouse, fetch_ashby
 
 
 def main():
@@ -9,32 +12,26 @@ def main():
         boards = list(csv.DictReader(f))
 
     all_jobs = []
+    failures = []
     for row in boards:
-        if row["ats"] != "greenhouse":
+        try:
+            if row["ats"] == "greenhouse":
+                jobs = fetch_greenhouse(row["company"], row["slug"])
+            elif row["ats"] == "ashby":
+                jobs = fetch_ashby(row["company"], row["slug"])
+            else:
+                print(f"Skipping {row['company']}: unknown ATS {row['ats']}")
+                continue
+        except requests.RequestException as e:
+            print(f"FAILED {row['company']}: {e}")
+            failures.append(row["company"])
             continue
-        jobs = fetch_greenhouse(row["company"], row["slug"])
+
         all_jobs.extend(jobs)
+        time.sleep(1)
 
-    match_count = 0
-    for job in all_jobs:
-        company = job["company"]
-        title = job["title"]
-        location = job["location"]
-        url = job["url"]
-        description = job["description"]
-
-        if not title_matches(title):
-            continue
-        if not location_matches(location):
-            continue
-        if too_much_experience(description):
-            continue
-
-        tag = "[CLEARANCE]" if is_clearance(description) else ""
-        print(f"{company} | {title} | {location} | {tag} | {url}")
-        match_count += 1
-
-    print(f"\n{match_count} matches out of {len(all_jobs)} jobs")
+    if failures:
+        print(f"Failed boards: {', '.join(failures)}")
 
 
 if __name__ == "__main__":
