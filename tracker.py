@@ -6,14 +6,48 @@ import requests
 from filters import title_matches, location_matches, too_much_experience, is_clearance
 from sources import fetch_greenhouse, fetch_ashby
 from db import connect, save_and_get_new
+from datetime import date
 
 def print_job(job):
     tag = "[CLEARANCE]" if is_clearance(job["description"]) else ""
     print(f"{job['company']} | {job['title']} | {job['location']} | {tag} | {job['url']}")
 
+def md_escape(text):
+    return text.replace("|", "\\|")
+
+def write_report(path, new_jobs, matches):
+    lines = [f"# Job check: {date.today()}", ""]
+
+    lines.append(f"## New today ({len(new_jobs)})")
+    lines.append("")
+    if new_jobs:
+        lines.append("| Company | Title | Location | Clearance | Link |")
+        lines.append("|---|---|---|---|---|")
+        for job in new_jobs:
+            clearance = "Yes" if is_clearance(job["description"]) else ""
+            lines.append(
+                f"| {md_escape(job['company'])} | {md_escape(job['title'])} | "
+                f"{md_escape(job['location'])} | {clearance} | [Apply]({job['url']}) |"
+            )
+
+    else:
+        lines.append("No new jobs today.")
+
+    lines.append("")
+    lines.append(f"## All current matches ({len(matches)})")
+    lines.append("")
+    for job in matches:
+        lines.append(f"- {md_escape(job['company'])}: [{md_escape(job['title'])}]({job['url']})")
+
+    with open(path, "w") as f:
+        f.write("\n".join(lines) + "\n")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Find new backend-adjacent jobs.")
     parser.add_argument("--all", action="store_true", help="show all current matches, not just new ones")
+    parser.add_argument("--db", default="local.db", help="database file to use")
+    parser.add_argument("--report", help="also write results to this markdwon file")
     args = parser.parse_args()
 
     with open("boards.csv") as f:
@@ -37,6 +71,7 @@ def main():
             continue
 
         all_jobs.extend(jobs)
+        print(f"{row['company']}: {len(jobs)} jobs fetched")
         time.sleep(1)
 
     # 2. Filter: keep only jobs that match
@@ -64,6 +99,10 @@ def main():
 
     if failures:
         print(f"Failed boards: {', '.join(failures)}")
+
+    if args.report:
+        write_report(args.report, new_jobs, matches)
+        print(f"Report written to {args.report}")
 
 
 if __name__ == "__main__":
