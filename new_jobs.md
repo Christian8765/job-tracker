@@ -1,27 +1,10 @@
 # Job check: 2026-10-31
 
-## New today (18)
+## New today (1)
 
 | Company | Title | Location | Clearance | Link |
 |---|---|---|---|---|
-| OpenAI | Software Engineer, Data Infrastructure | San Francisco \| New York City \| Seattle \| Mountain View |  | [Apply](https://jobs.ashbyhq.com/openai/f763c6b3-5167-4a67-b691-4c3fa2c44156) |
-| OpenAI | Software Engineer, Observability | San Francisco \| New York City \| Mountain View |  | [Apply](https://jobs.ashbyhq.com/openai/d4dcd344-40cf-44d6-a7dd-172118eb0842) |
-| OpenAI | Software Engineer, Security Observability | San Francisco \| New York City \| Seattle \| US - Remote |  | [Apply](https://jobs.ashbyhq.com/openai/1e4e9985-babf-4bd9-8fe8-a2016250780d) |
-| OpenAI | Software Engineer, Fleet Management | San Francisco \| New York City |  | [Apply](https://jobs.ashbyhq.com/openai/7809102e-e82a-4678-bf7c-221de8acc0d6) |
-| OpenAI | Software Engineer, Fleet Infrastructure | San Francisco \| New York City |  | [Apply](https://jobs.ashbyhq.com/openai/a58add97-1968-4d5c-b504-ab62bea12df3) |
-| OpenAI | Software Engineer, Full Stack (People Innovation) | US - Remote \| San Francisco |  | [Apply](https://jobs.ashbyhq.com/openai/d4780eac-03ad-4dae-861f-99af22b4287e) |
-| OpenAI | Software Engineer, Agent Infrastructure | San Francisco \| New York City \| London, UK |  | [Apply](https://jobs.ashbyhq.com/openai/c1316397-25bb-4add-9e9d-0e3ea8ba929a) |
-| OpenAI | Software Engineer, GPU Infrastructure - HPC | San Francisco \| New York City |  | [Apply](https://jobs.ashbyhq.com/openai/f58cb1eb-9642-4a4d-a14d-d7a57d583a11) |
-| OpenAI | Software Engineer, Identity Infrastructure | San Francisco \| New York City \| Seattle |  | [Apply](https://jobs.ashbyhq.com/openai/551b0d0d-46c2-42fb-bb05-46e2fba8d4db) |
-| OpenAI | Software Engineer, Infrastructure Security | US - Remote \| New York City \| Seattle \| San Francisco \| Remote |  | [Apply](https://jobs.ashbyhq.com/openai/98ad9beb-4f91-496c-bd16-ac0b2a8d5bb2) |
-| OpenAI | Software Engineer, Delivery / CD | San Francisco \| New York City \| Seattle |  | [Apply](https://jobs.ashbyhq.com/openai/e14fc37c-7ae5-4a6b-ba0d-a36860cf9bb2) |
-| OpenAI | Software Engineer, Codex Core Agents | San Francisco \| New York City \| Seattle \| London, UK |  | [Apply](https://jobs.ashbyhq.com/openai/7ade7a12-845c-4e3a-af23-c028420bd181) |
-| OpenAI | Software Engineer, Compute Infrastructure | San Francisco \| New York City \| Seattle \| London, UK |  | [Apply](https://jobs.ashbyhq.com/openai/ca300a6d-a2a7-4580-aad7-323fbdfee7b1) |
-| OpenAI | Full Stack Software Engineer, Monetization Platform | San Francisco \| New York City |  | [Apply](https://jobs.ashbyhq.com/openai/191e42f8-cd62-4082-8f72-505c26505e67) |
-| OpenAI | Software Engineer, Host Assurance | San Francisco \| Seattle \| US - Remote |  | [Apply](https://jobs.ashbyhq.com/openai/0b9e565a-ae5f-40fc-8350-b59f71f76df1) |
-| OpenAI | Software Engineer, Full Stack — Dots | New York City |  | [Apply](https://jobs.ashbyhq.com/openai/dbe79b89-e593-44b3-8aec-c667f7134445) |
-| OpenAI | Software Engineer, Mobile Web — Dots | New York City |  | [Apply](https://jobs.ashbyhq.com/openai/3b34eb10-25b0-4a97-bd6d-05fc90ad4981) |
-| OpenAI | Software Engineer, Backend — Dots | New York City |  | [Apply](https://jobs.ashbyhq.com/openai/341a5ad4-9134-4bad-88e1-2ce0f70bf519) |
+| Bentley Systems | Full-Stack Software Engineer (AI Focus) | Lithuania - Remote |  | [Apply](https://bentleysystems.wd5.myworkdayjobs.com/bentley/job/Lithuania---Remote/Full-Stack-Software-Engineer--AI-Focus-_RC1) |
 
 ## All current matches (25)
 
@@ -37,7 +20,6 @@
 - OpenAI: [Software Engineer, Security Observability](https://jobs.ashbyhq.com/openai/1e4e9985-babf-4bd9-8fe8-a2016250780d)
 - OpenAI: [Software Engineer, Fleet Management](https://jobs.ashbyhq.com/openai/7809102e-e82a-4678-bf7c-221de8acc0d6)
 - OpenAI: [Software Engineer, Fleet Infrastructure](https://jobs.ashbyhq.com/openai/a58add97-1968-4d5c-b504-ab62bea12df3)
-- OpenAI: [Software Engineer, Full Stack (People Innovation)](https://jobs.ashbyhq.com/openai/d4780eac-03ad-4dae-861f-99af22b4287e)
 - OpenAI: [Software Engineer, Agent Infrastructure](https://jobs.ashbyhq.com/openai/c1316397-25bb-4add-9e9d-0e3ea8ba929a)
 - OpenAI: [Software Engineer, GPU Infrastructure - HPC](https://jobs.ashbyhq.com/openai/f58cb1eb-9642-4a4d-a14d-d7a57d583a11)
 - OpenAI: [Software Engineer, Identity Infrastructure](https://jobs.ashbyhq.com/openai/551b0d0d-46c2-42fb-bb05-46e2fba8d4db)
@@ -50,3 +32,4 @@
 - OpenAI: [Software Engineer, Full Stack — Dots](https://jobs.ashbyhq.com/openai/dbe79b89-e593-44b3-8aec-c667f7134445)
 - OpenAI: [Software Engineer, Mobile Web — Dots](https://jobs.ashbyhq.com/openai/3b34eb10-25b0-4a97-bd6d-05fc90ad4981)
 - OpenAI: [Software Engineer, Backend — Dots](https://jobs.ashbyhq.com/openai/341a5ad4-9134-4bad-88e1-2ce0f70bf519)
+- Bentley Systems: [Full-Stack Software Engineer (AI Focus)](https://bentleysystems.wd5.myworkdayjobs.com/bentley/job/Lithuania---Remote/Full-Stack-Software-Engineer--AI-Focus-_RC1)
