@@ -4,7 +4,7 @@ import argparse
 import requests
 
 from filters import title_matches, location_matches, too_much_experience, is_clearance
-from sources import fetch_greenhouse, fetch_ashby
+from sources import fetch_greenhouse, fetch_ashby, fetch_workday, fetch_workday_details
 from db import connect, save_and_get_new
 from datetime import date
 
@@ -62,6 +62,8 @@ def main():
                 jobs = fetch_greenhouse(row["company"], row["slug"])
             elif row["ats"] == "ashby":
                 jobs = fetch_ashby(row["company"], row["slug"])
+            elif row["ats"] == "workday":
+                jobs = fetch_workday(row["company"], row["slug"])
             else:
                 print(f"Skipping {row['company']}: unknown ATS {row['ats']}")
                 continue
@@ -79,6 +81,15 @@ def main():
     for job in all_jobs:
         if not title_matches(job["title"]):
             continue
+
+        if job["description"] is None:
+            try:
+                job.update(fetch_workday_details(job["detail_url"]))
+            except requests.RequestException as e:
+                print(f"Could not load details for {job['company']} | {job['title']}: {e}")
+                continue
+            time.sleep(0.5)
+
         if not location_matches(job["location"]):
             continue
         if too_much_experience(job["description"]):

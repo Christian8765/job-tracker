@@ -1,6 +1,66 @@
 import html
 import re
 import requests
+import time
+from urllib.parse import urlparse
+
+def parse_workday_url(careers_url):
+    parsed = urlparse(careers_url)
+    host = parsed.netloc
+    tenant = host.split(".")[0]
+    site = parsed.path.strip("/").split("/")[-1]
+    return host, tenant, site
+
+def fetch_workday(company, careers_url):
+    host, tenant, site = parse_workday_url(careers_url)
+    api = f"https://{host}/wday/cxs/{tenant}/{site}"
+
+    results = []
+    offset = 0
+    total = None
+    while True:
+        body = {"appliedFacets": {}, "limit": 20, "offset": offset, "searchText": ""}
+        r = requests.post(f"{api}/jobs", json=body,
+                          headers={"Accept": "application/json"}, timeout=15)
+        r.raise_for_status()
+        data = r.json()
+
+        if total is None:
+            total = data.get("total", 0)
+        postings = data.get("jobPostings", [])
+        if not postings:
+            break
+
+        for job in postings:
+            path = job["externalPath"]
+            results.append({
+                "company": company,
+                "job_id": path,
+                "title": job["title"].strip(),
+                "location": job.get("locationsText", ""),
+                "url": f"https://{host}/{site}{path}",
+                "description": None,
+                "detail_url": f"{api}{path}",
+            })
+
+        offset += len(postings)
+        if offset >= total:
+            break
+        time.sleep(0.5)
+
+    return results
+
+def fetch_workday_details(detail_url):
+    r = requests.get(detail_url, headers={"Accept": "application/json"}, timeout=15)
+    r.raise_for_status()
+    info = r.json()["jobPostingInfo"]
+
+    locations = [info.get("location", "")] + info.get("additionalLocations", [])
+    return {
+        "location": " | ".join(loc for loc in locations if loc), 
+        "description": clean_description(info.get("jobDescription", ""))
+    }
+
 
 def clean_description(html_text):
     text = html.unescape(html_text)
@@ -54,3 +114,4 @@ def fetch_ashby(company, slug):
         })
 
     return results
+
