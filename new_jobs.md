@@ -1,10 +1,8 @@
-# Job check: 2026-10-31
+# Job check: 2026-11-01
 
-## New today (1)
+## New today (0)
 
-| Company | Title | Location | Clearance | Link |
-|---|---|---|---|---|
-| Bentley Systems | Full-Stack Software Engineer (AI Focus) | Lithuania - Remote |  | [Apply](https://bentleysystems.wd5.myworkdayjobs.com/bentley/job/Lithuania---Remote/Full-Stack-Software-Engineer--AI-Focus-_RC1) |
+No new jobs today.
 
 ## All current matches (25)
 
