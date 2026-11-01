@@ -23,6 +23,12 @@ def run_tests():
     assert is_clearance("Active Secret clearance required") == True
     assert is_clearance("Executive Secretary") == False
     assert is_clearance("Python and AWS") == False
+    assert location_matches("Lithuania - Remote") == False
+    assert location_matches("Remote-Friendly (Travel Required) | Canada") == False
+    assert location_matches("Virtual Three, TX | Remote") == True
+    assert location_matches("Remote") == True
+    assert title_matches("Software Engineer Stf - E4") == False
+    assert title_matches("Software Engineer - E2") == True
 
 if __name__ == "__main__":
     run_tests()

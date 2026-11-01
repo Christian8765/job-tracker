@@ -5,9 +5,11 @@ URL = "https://boards-api.greenhouse.io/v1/boards/anthropic/jobs?content=true"
 INCLUDE = ["software engineer", "backend", "back-end", "platform engineer", "infrastructure engineer",
            "developer", "api", "data engineer"]
 EXCLUDE = ["senior", "sr", "staff", "principal", "lead", "manager", "director", "head of",
-           "architect", "iii", "iv"]
+           "architect", "iii", "iv", "stf", "e4", "e5"]
 
 LOCATIONS = ["nyc", "new york city", "new york", "remote"]
+
+NON_US = ["lithuania", "canada", "ukraine", "india", "uk", "gbr"]
 
 WORD_NUMBERS = {
     "one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
@@ -38,6 +40,8 @@ def title_matches(title):
 
 def location_matches(location):
     t = location.lower()
+    if any(re.search(rf"\b{word}\b", t) for word in NON_US):
+        return False
     if any(re.search(rf"\b{word}\b", t) for word in LOCATIONS):
         return True
     return False

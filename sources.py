@@ -2,7 +2,7 @@ import html
 import re
 import requests
 import time
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qs
 
 def parse_workday_url(careers_url):
     parsed = urlparse(careers_url)
@@ -115,3 +115,57 @@ def fetch_ashby(company, slug):
 
     return results
 
+def fetch_eightfold(company, search_url):
+    parts = urlparse(search_url)
+    host = parts.netloc
+    base = f"https://{host}{parts.path}"
+    params = {k: v[0] for k, v in parse_qs(parts.query, keep_blank_values=True).items()}
+    domain = params["domain"]
+
+    results = []
+    start = 0
+    total = None
+    while True:
+        params["start"] = start
+        r = requests.get(base, params=params, timeout=15)
+        r.raise_for_status()
+        data = r.json()["data"]
+
+        if total is None:
+            total = data.get("count", 0)
+        positions = data.get("positions", [])
+        if not positions:
+            break
+
+        for job in positions:
+            locations = list(job.get("locations", []))
+            if "remote" in job.get("workLocationOption", ""):
+                locations.append("Remote")
+            results.append({
+                "company": company,
+                "job_id": str(job["id"]),
+                "title": job["name"].strip(),
+                "location": " | ".join(locations),
+                "url": f"https://{host}{job['positionUrl']}",
+                "description": None,
+                "detail_url": f"https://{host}/api/pcsx/position_details?position_id={job['id']}&domain={domain}",
+            })
+
+        start += len(positions)
+        if start >= total:
+            break
+        time.sleep(0.5)
+
+    return results
+
+def fetch_eightfold_details(detail_url):
+    r = requests.get(detail_url, timeout=15)
+    r.raise_for_status()
+    info = r.json()["data"]
+    return {"description": clean_description(info.get("jobDescription", ""))}
+
+
+def fetch_details(job):
+    if "myworkdayjobs.com" in job["detail_url"]:
+        return fetch_workday_details(job["detail_url"])
+    return fetch_eightfold_details(job["detail_url"])

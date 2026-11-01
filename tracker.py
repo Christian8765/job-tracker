@@ -4,7 +4,7 @@ import argparse
 import requests
 
 from filters import title_matches, location_matches, too_much_experience, is_clearance
-from sources import fetch_greenhouse, fetch_ashby, fetch_workday, fetch_workday_details
+from sources import fetch_greenhouse, fetch_ashby, fetch_workday, fetch_workday_details, fetch_eightfold, fetch_details 
 from db import connect, save_and_get_new
 from datetime import date
 
@@ -64,6 +64,8 @@ def main():
                 jobs = fetch_ashby(row["company"], row["slug"])
             elif row["ats"] == "workday":
                 jobs = fetch_workday(row["company"], row["slug"])
+            elif row["ats"] == "eightfold":
+                jobs = fetch_eightfold(row["company"], row["slug"])
             else:
                 print(f"Skipping {row['company']}: unknown ATS {row['ats']}")
                 continue
@@ -84,7 +86,7 @@ def main():
 
         if job["description"] is None:
             try:
-                job.update(fetch_workday_details(job["detail_url"]))
+                job.update(fetch_details(job))
             except requests.RequestException as e:
                 print(f"Could not load details for {job['company']} | {job['title']}: {e}")
                 continue
@@ -97,7 +99,7 @@ def main():
         matches.append(job)
 
     # 3. Save: store matches, find which are new
-    conn = connect()
+    conn = connect(args.db)
     new_jobs = save_and_get_new(conn, matches)
     conn.close()
 
