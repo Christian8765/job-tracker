@@ -2,10 +2,11 @@ import csv
 import time
 import argparse
 import requests
+import logging
 
 from filters import title_matches, location_matches, too_much_experience, is_clearance
-from sources import fetch_greenhouse, fetch_ashby, fetch_workday, fetch_workday_details, fetch_eightfold, fetch_details 
-from db import connect, save_and_get_new
+from sources import fetch_greenhouse, fetch_ashby, fetch_workday, fetch_eightfold, fetch_details 
+from db import connect, save_and_get_new, record_board_run, broken_boards
 from datetime import date
 
 def print_job(job):
@@ -15,8 +16,16 @@ def print_job(job):
 def md_escape(text):
     return text.replace("|", "\\|")
 
-def write_report(path, new_jobs, matches):
+def write_report(path, new_jobs, matches, broken):
     lines = [f"# Job check: {date.today()}", ""]
+
+    if broken:
+        logging.warning(f"Boards with 0 jobs 3 runs in a row: {', '.join(broken)}")
+        lines.append("## ⚠️ Boards needing attention")
+        lines.append("")
+        for company in broken:
+            lines.append(f"- {company}: 0 jobs for 3 runs in a row")
+        lines.append("")
 
     lines.append(f"## New today ({len(new_jobs)})")
     lines.append("")
@@ -44,10 +53,11 @@ def write_report(path, new_jobs, matches):
 
 
 def main():
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
     parser = argparse.ArgumentParser(description="Find new backend-adjacent jobs.")
     parser.add_argument("--all", action="store_true", help="show all current matches, not just new ones")
     parser.add_argument("--db", default="local.db", help="database file to use")
-    parser.add_argument("--report", help="also write results to this markdwon file")
+    parser.add_argument("--report", help="also write results to this markdown file")
     args = parser.parse_args()
 
     with open("boards.csv") as f:
@@ -56,6 +66,7 @@ def main():
     # 1. Gather: fetch jobs from every board
     all_jobs = []
     failures = []
+    conn = connect(args.db)
     for row in boards:
         try:
             if row["ats"] == "greenhouse":
@@ -67,15 +78,17 @@ def main():
             elif row["ats"] == "eightfold":
                 jobs = fetch_eightfold(row["company"], row["slug"])
             else:
-                print(f"Skipping {row['company']}: unknown ATS {row['ats']}")
+                logging.warning(f"Skipping {row['company']}: unknown ATS {row['ats']}")
                 continue
         except requests.RequestException as e:
-            print(f"FAILED {row['company']}: {e}")
+            logging.error(f"FAILED {row['company']}: {e}")
             failures.append(row["company"])
+            record_board_run(conn, row["company"], 0)
             continue
 
+        record_board_run(conn, row["company"], len(jobs))
         all_jobs.extend(jobs)
-        print(f"{row['company']}: {len(jobs)} jobs fetched")
+        logging.info(f"{row['company']}: {len(jobs)} jobs fetched")
         time.sleep(1)
 
     # 2. Filter: keep only jobs that match
@@ -88,7 +101,7 @@ def main():
             try:
                 job.update(fetch_details(job))
             except requests.RequestException as e:
-                print(f"Could not load details for {job['company']} | {job['title']}: {e}")
+                logging.warning(f"Could not load details for {job['company']} | {job['title']}: {e}")
                 continue
             time.sleep(0.5)
 
@@ -99,11 +112,10 @@ def main():
         matches.append(job)
 
     # 3. Save: store matches, find which are new
-    conn = connect(args.db)
     new_jobs = save_and_get_new(conn, matches)
+    broken = broken_boards(conn, [row["company"] for row in boards])
     conn.close()
 
-    # 4. Report
     # 4. Report
     to_show = matches if args.all else new_jobs
     for job in to_show:
@@ -114,7 +126,7 @@ def main():
         print(f"Failed boards: {', '.join(failures)}")
 
     if args.report:
-        write_report(args.report, new_jobs, matches)
+        write_report(args.report, new_jobs, matches, broken)
         print(f"Report written to {args.report}")
 
 
