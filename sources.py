@@ -2,6 +2,7 @@ import html
 import re
 import requests
 import time
+import logging
 from urllib.parse import urlparse, parse_qs
 
 def parse_workday_url(careers_url):
@@ -32,6 +33,9 @@ def fetch_workday(company, careers_url):
             break
 
         for job in postings:
+            if "title" not in job or "externalPath" not in job:
+                logging.warning(f"(company): skipping incomplete posting: {job}")
+                continue
             path = job["externalPath"]
             results.append({
                 "company": company,

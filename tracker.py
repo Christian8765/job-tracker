@@ -80,8 +80,8 @@ def main():
             else:
                 logging.warning(f"Skipping {row['company']}: unknown ATS {row['ats']}")
                 continue
-        except requests.RequestException as e:
-            logging.error(f"FAILED {row['company']}: {e}")
+        except (requests.RequestException, KeyError, ValueError) as e:
+            logging.error(f"FAILED {row['company']}: {type(e).__name__}:{e}")
             failures.append(row["company"])
             record_board_run(conn, row["company"], 0)
             continue
