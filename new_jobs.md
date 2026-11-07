@@ -1,10 +1,8 @@
-# Job check: 2026-11-06
+# Job check: 2026-11-07
 
-## New today (1)
+## New today (0)
 
-| Company | Title | Location | Clearance | Link |
-|---|---|---|---|---|
-| OpenAI | Software Engineer, Agent Platform | San Francisco \| New York City |  | [Apply](https://jobs.ashbyhq.com/openai/783704d7-5afa-45aa-899b-1d6799f73004) |
+No new jobs today.
 
 ## All current matches (25)
 
