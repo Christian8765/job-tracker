@@ -1,10 +1,10 @@
-# Job check: 2026-11-09
+# Job check: 2026-11-10
 
 ## New today (0)
 
 No new jobs today.
 
-## All current matches (23)
+## All current matches (24)
 
 - Anthropic: [IT Systems Engineer, Client Platform Engineer, ChromeOS](https://job-boards.greenhouse.io/anthropic/jobs/5456018008)
 - Anthropic: [Machine Learning Infrastructure Engineer, Safeguards Research](https://job-boards.greenhouse.io/anthropic/jobs/5364804008)
@@ -28,4 +28,5 @@ No new jobs today.
 - OpenAI: [Software Engineer, Full Stack — Dots](https://jobs.ashbyhq.com/openai/dbe79b89-e593-44b3-8aec-c667f7134445)
 - OpenAI: [Software Engineer, Mobile Web — Dots](https://jobs.ashbyhq.com/openai/3b34eb10-25b0-4a97-bd6d-05fc90ad4981)
 - OpenAI: [Software Engineer, Backend — Dots](https://jobs.ashbyhq.com/openai/341a5ad4-9134-4bad-88e1-2ce0f70bf519)
-- OpenAI: [Software Engineer, Agent Platform](https://jobs.ashbyhq.com/openai/783704d7-5afa-45aa-899b-1d6799f73004)
+- Lockheed Martin: [Software Engineer - E2](https://lockheedmartin.eightfold.ai/careers/job/996476760583)
+- Lockheed Martin: [SAP Software Engineer - E2](https://lockheedmartin.eightfold.ai/careers/job/996476760562)
