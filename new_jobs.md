@@ -1,4 +1,4 @@
-# Job check: 2026-11-10
+# Job check: 2026-11-11
 
 ## New today (0)
 
@@ -28,5 +28,5 @@ No new jobs today.
 - OpenAI: [Software Engineer, Full Stack — Dots](https://jobs.ashbyhq.com/openai/dbe79b89-e593-44b3-8aec-c667f7134445)
 - OpenAI: [Software Engineer, Mobile Web — Dots](https://jobs.ashbyhq.com/openai/3b34eb10-25b0-4a97-bd6d-05fc90ad4981)
 - OpenAI: [Software Engineer, Backend — Dots](https://jobs.ashbyhq.com/openai/341a5ad4-9134-4bad-88e1-2ce0f70bf519)
-- Lockheed Martin: [Software Engineer - E2](https://lockheedmartin.eightfold.ai/careers/job/996476760583)
 - Lockheed Martin: [SAP Software Engineer - E2](https://lockheedmartin.eightfold.ai/careers/job/996476760562)
+- Lockheed Martin: [Software Engineer - E2](https://lockheedmartin.eightfold.ai/careers/job/996476760583)
