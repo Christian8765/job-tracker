@@ -1,10 +1,20 @@
-# Job check: 2026-11-18
+# Job check: 2026-11-19
 
-## New today (1)
+## ⚠️ Boards needing attention
 
-| Company | Title | Location | Clearance | Link |
-|---|---|---|---|---|
-| Anthropic | Developer Relations, Platform | San Francisco, CA \| New York City, NY |  | [Apply](https://job-boards.greenhouse.io/anthropic/jobs/5206870008) |
+- Visa: 0 jobs for 3 runs in a row
+- Intel: 0 jobs for 3 runs in a row
+- Zillow: 0 jobs for 3 runs in a row
+- Medtronic: 0 jobs for 3 runs in a row
+- Washington Post: 0 jobs for 3 runs in a row
+- Conde Nast: 0 jobs for 3 runs in a row
+- Bentley Systems: 0 jobs for 3 runs in a row
+- Ticketmaster: 0 jobs for 3 runs in a row
+- Live Nation: 0 jobs for 3 runs in a row
+
+## New today (0)
+
+No new jobs today.
 
 ## All current matches (25)
 
